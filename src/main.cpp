@@ -99,7 +99,9 @@ void setup()
 void loop()
 {
   digitalWrite(LED_BUILTIN, 1);
+  ws.textAll("LED_ON");
   delay(2000);
   digitalWrite(LED_BUILTIN, 0);
   delay(1000);
+  ws.textAll("LED_OFF");
 }
