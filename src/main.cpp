@@ -32,7 +32,7 @@ void initWiFi()
   Serial.printf(" %s\n", WiFi.localIP().toString().c_str());
 }
 AsyncWebServer server(HTTP_PORT);
-AsyncWebSocket ws("/ws");
+AsyncWebSocket ws("/wss");
 void initWebServer()
 {
   server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
