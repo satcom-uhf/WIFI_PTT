@@ -18,7 +18,7 @@ var webaudio_tooling_obj = (function () {
     navigator.mozGetUserMedia;
   window.startAudio = function () {
     if (navigator.getUserMedia) {
-      audioContext = new AudioContext();
+      audioContext = new AudioContext({sampleRate:8000});
       audioContext.resume();
       navigator.getUserMedia(
         { audio: true },
@@ -40,10 +40,10 @@ var webaudio_tooling_obj = (function () {
     var index = 0;
     var max_index = num_row_to_display;
 
-    console.log("__________ " + label);
+    //console.log("__________ " + label);
 
     for (; index < max_index && index < size_buffer; index += 1) {
-      console.log(given_typed_array[index]);
+      //console.log(given_typed_array[index]);
     }
   }
 
