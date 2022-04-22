@@ -1,5 +1,5 @@
 var webaudio_tooling_obj = (function () {
-  var audioContext = new AudioContext();
+  var audioContext;
 
   console.log("audio is starting up ...");
 
@@ -12,22 +12,27 @@ var webaudio_tooling_obj = (function () {
     script_processor_fft_node = null,
     analyserNode = null;
 
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-  if (navigator.getUserMedia) {
-    navigator.getUserMedia(
-      { audio: true },
-      function (stream) {
-        start_microphone(stream);
-      },
-      function (e) {
-        alert("Error capturing audio.");
-      }
-    );
-  } else {
-    alert("getUserMedia not supported in this browser.");
-  }
-
+  navigator.getUserMedia =
+    navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia;
+  window.startAudio = function () {
+    if (navigator.getUserMedia) {
+      audioContext = new AudioContext();
+      audioContext.resume();
+      navigator.getUserMedia(
+        { audio: true },
+        function (stream) {
+          start_microphone(stream);
+        },
+        function (e) {
+          alert("Error capturing audio.");
+        }
+      );
+    } else {
+      alert("getUserMedia not supported in this browser.");
+    }
+  };
   // ---
 
   function show_some_data(given_typed_array, num_row_to_display, label) {
