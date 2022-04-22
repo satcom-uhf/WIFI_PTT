@@ -1,7 +1,7 @@
 document.getElementById("test").innerHTML = "WebSocket is not connected";
 
 var websocket = new WebSocket(`wss://${location.hostname}/wss`);
-var slider = document.getElementById("myRange");
+var slider = document.getElementById("volume");
 
 slider.oninput = function () {
   websocket.send("L" + slider.value);
