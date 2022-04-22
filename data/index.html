@@ -16,7 +16,10 @@
 </p>
 <div class="slidecontainer">
   <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+  
 </div>
+<p>Volume</p>
+  <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5"/>
 <p id="test"></p>
 <p>
   The below counter is being sent from the ESP32:
@@ -27,54 +30,7 @@
   <a href="this_page_doesnt_exist.fail">This</a> page does not exist, so the error page will appear.
 </p>
 
-<script type="text/javascript">
-document.getElementById("test").innerHTML = "WebSocket is not connected";
-
-var websocket = new WebSocket(`ws://${location.hostname}/ws`);
-var slider = document.getElementById("myRange");
-
-slider.oninput = function () {
-  websocket.send("L" + slider.value);
-}
-
-function sendMsg() {
-  //websocket.send("sup playa!");
-  websocket.send('L50');
-  console.log('Sent message to websocket');
-}
-
-websocket.onopen = function(evt) {
-  console.log('WebSocket connection opened');
-  websocket.send("It's open! Hooray!!!");
-  document.getElementById("test").innerHTML = "WebSocket is connected!";
-}
-
-websocket.onmessage = function(evt) {
-  var msg = evt.data;
-  var value;
-  switch(msg.charAt(0)) {
-    case 'L':
-      console.log(msg);
-      value = parseInt(msg.replace(/[^0-9\.]/g, ''), 10);
-      slider.value = value;
-      console.log("Led = " + value);
-      break;
-    default:
-      document.getElementById("output").innerHTML = evt.data;
-      break;
-  }
-}
-
-websocket.onclose = function(evt) {
-  console.log('Websocket connection closed');
-  document.getElementById("test").innerHTML = "WebSocket closed";
-}
-
-websocket.onerror = function(evt) {
-  console.log('Websocket error: ' + evt);
-  document.getElementById("test").innerHTML = "WebSocket error????!!!1!!";
-}
-
-</script>
+<script type="text/javascript" src="/websockets.js"></script>
+<script type="text/javascript" src="/audio.js"></script>
 </body>
 </html>

@@ -2,13 +2,14 @@
 #include <SPIFFS.h>
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
+#include <driver/dac.h>
 
 #define LED_BUILTIN 2
 #define HTTP_PORT 80
 
 // WiFi credentials
-const char *WIFI_SSID = "ssid";
-const char *WIFI_PASS = "pass";
+const char *WIFI_SSID = "sharp-dev.net";
+const char *WIFI_PASS = "satcom73";
 void initSPIFFS()
 {
   if (!SPIFFS.begin())
@@ -42,7 +43,7 @@ void initWebServer()
 // ----------------------------------------------------------------------------
 void notifyClients(bool state) {
     ws.textAll(state ? "on" : "off");
-    ws.binaryAll()
+    //ws.binaryAll()
 }
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     AwsFrameInfo *info = (AwsFrameInfo*)arg;
@@ -87,6 +88,7 @@ void setup()
 {
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(115200);
+  dac_output_enable(DAC_CHANNEL_1);
   delay(500);
   initSPIFFS();
   initWiFi();
